@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.LinearLayout;
@@ -21,22 +22,52 @@ public class ExecutionActivity extends AppCompatActivity {
     private Class fragmentClass = null;
     private Fragment mainFragment = null;
 
+    private LinearLayout llcont;
+    private LinearLayout ll;
+
     @Override
     protected void onPause() {
         super.onPause();
 
         Log.e("69", "lol");
 
-        fragmentClass = null;
-        mainFragment = null;
+//        fragmentClass = null;
+//        mainFragment = null;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+
+        transaction.remove(mainFragment);
+        transaction.commit();
+
+        llcont.removeView(ll);
+
+        Log.e("69", "stoooppp");
+
+        super.onSaveInstanceState(savedInstanceState);
+
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
+
+
+
+
         Log.e("69", "destoryyyyyy");
     }
+
+//    @Override
+//    public void onConfigurationChanged(Configuration newConfig) {
+//        super.onConfigurationChanged(newConfig);
+//        setContentView(R.layout.activity_execution);
+//    }
 
 
 
@@ -47,6 +78,8 @@ public class ExecutionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_execution);
 
         context = getApplicationContext();
+        llcont = (LinearLayout) findViewById(R.id.llcontainer);
+
         final String path = context.getExternalFilesDir(null).getAbsolutePath();
         final String apkPath =  path + "/demoboi.apk";
         Log.e("69", apkPath);
@@ -73,9 +106,9 @@ public class ExecutionActivity extends AppCompatActivity {
             Log.d("lol", "shiet");
         }
 
-        LinearLayout llcont = (LinearLayout) findViewById(R.id.llcontainer);
+//        LinearLayout llcont = (LinearLayout) findViewById(R.id.llcontainer);
 
-        LinearLayout ll = new LinearLayout(getApplicationContext());
+        ll = new LinearLayout(getApplicationContext());
         int tmpid = 1;
         ll.setId(tmpid);
 
