@@ -2,6 +2,7 @@ package nl.tudelft.trustchain.FOC
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Environment
@@ -284,35 +285,38 @@ class MainActivityFOC : AppCompatActivity() {
     @Suppress("deprecation", "unchecked_cast")
     fun loadDynamicCode() {
         try {
-            val jarName: String?
-            val inputText = enterJar.text.toString()
-            if (inputText == "") {
-                printToast("No jar/apk given, using default")
-                jarName = "Injected.jar"
-            } else jarName = inputText
-            val libPath =
-                Environment.getExternalStorageDirectory().absolutePath + "/" + jarName
-            val dexOutputDir = getDir("dex", Context.MODE_PRIVATE)
-            val tmpDir = File(libPath)
-            val exists = tmpDir.exists()
-            val extStore =
-                Environment.MEDIA_MOUNTED == Environment.getExternalStorageState()
-            if (exists && extStore) Log.i("personal", "exists")
-            else {
-                printToast("Something went wrong, check logs")
-                return
-            }
-            val classloader = DexClassLoader(
-                libPath, dexOutputDir.absolutePath, null,
-                this.javaClass.classLoader
-            )
-            val classToLoad =
-                classloader.loadClass("com.example.injected.Injected") as Class<Any>
-            // final Class<Object> classToLoad = (Class<Object>) classloader.loadClass("p000.Example");
-            val myInstance = classToLoad.newInstance()
-            val printStuff = classToLoad.getMethod("printStuff")
-            printStuff.invoke(myInstance)
-            printToast("Check your logs for interdimensional message!")
+//            val jarName: String?
+//            val inputText = enterJar.text.toString()
+//            if (inputText == "") {
+//                printToast("No jar/apk given, using default")
+//                jarName = "Injected.jar"
+//            } else jarName = inputText
+//            val libPath =
+//                Environment.getExternalStorageDirectory().absolutePath + "/" + jarName
+//            val dexOutputDir = getDir("dex", Context.MODE_PRIVATE)
+//            val tmpDir = File(libPath)
+//            val exists = tmpDir.exists()
+//            val extStore =
+//                Environment.MEDIA_MOUNTED == Environment.getExternalStorageState()
+//            if (exists && extStore) Log.i("personal", "exists")
+//            else {
+//                printToast("Something went wrong, check logs")
+//                return
+//            }
+//            val classloader = DexClassLoader(
+//                libPath, dexOutputDir.absolutePath, null,
+//                this.javaClass.classLoader
+//            )
+//            val classToLoad =
+//                classloader.loadClass("com.example.injected.Injected") as Class<Any>
+//            // final Class<Object> classToLoad = (Class<Object>) classloader.loadClass("p000.Example");
+//            val myInstance = classToLoad.newInstance()
+//            val printStuff = classToLoad.getMethod("printStuff")
+//            printStuff.invoke(myInstance)
+//            printToast("Check your logs for interdimensional message!")
+
+            val intent = Intent(this, ExecutionActivity::class.java)
+            startActivity(intent)
         } catch (e: Exception) {
             e.printStackTrace()
         }
