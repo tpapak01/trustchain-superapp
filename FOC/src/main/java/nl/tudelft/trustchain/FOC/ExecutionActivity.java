@@ -72,7 +72,6 @@ public class ExecutionActivity extends AppCompatActivity {
         if(mainFragment == null) {
             Log.d("lol", "shiet");
         }
-        //adsasd
 
         LinearLayout llcont = (LinearLayout) findViewById(R.id.llcontainer);
 
